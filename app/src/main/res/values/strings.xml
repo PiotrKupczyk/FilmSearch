@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Film Search</string>
+    <string name="movie_tittle">Movie tittle</string>
+    <string name="movie_category">Movie category</string>
+</resources>
