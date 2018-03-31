@@ -1,10 +1,11 @@
 package adapters
 
-import android.graphics.Movie
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.piotrkupczyk.filmsearch.MovieDetailsActivity
 import com.example.piotrkupczyk.filmsearch.R
 import com.squareup.picasso.Picasso
 import dataClasses.HomeFeed
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.movie_row.view.*
 /**
  * Created by piotrkupczyk on 24.03.2018.
  */
-class MovieAdapter(private val homeFeed: HomeFeed) : RecyclerView.Adapter<CustomViewHolder>() {
+class MovieAdapter(private val homeFeed: HomeFeed,private val context: Context) : RecyclerView.Adapter<CustomViewHolder>() {
 
     override fun getItemCount(): Int {
         return homeFeed.movies.size
@@ -35,7 +36,9 @@ class MovieAdapter(private val homeFeed: HomeFeed) : RecyclerView.Adapter<Custom
             Picasso.with(holder.view.context).load(homeFeed.movies.get(position).posterUrl)
                     .into(moviePoster)
 
-
+            holder.view.movieRow.setOnClickListener {
+                MovieDetailsActivity.start(context, position, homeFeed)
+            }
         }
     }
 

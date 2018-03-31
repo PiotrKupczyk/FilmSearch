@@ -4,7 +4,6 @@ import adapters.MovieAdapter
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
 import com.beust.klaxon.Klaxon
 import dataClasses.HomeFeed
 import kotlinx.android.synthetic.main.activity_film_scroll.*
@@ -19,8 +18,9 @@ class MovieScrollActivity : AppCompatActivity() {
 
         initRecyclerView()
         fetchJSON()
-
     }
+
+
 
     fun initRecyclerView() {
         recyclerView_main.layoutManager = LinearLayoutManager(this)
@@ -42,18 +42,11 @@ class MovieScrollActivity : AppCompatActivity() {
                 val result = Klaxon().parse<HomeFeed>(body!!)
 
                 runOnUiThread {
-                    recyclerView_main.adapter = MovieAdapter(result!!)
+                    recyclerView_main.adapter = MovieAdapter(result!!, this@MovieScrollActivity)
                 }
             }
 
         })
-
-//        val bufferReader = BufferedReader(InputStreamReader(assets.open("moviesData")))
-//        val inputString = bufferReader.use { it.readText() }
-//
-//        val result = Klaxon().parse<List<Movie>>(inputString)
-//        print(result)
-
     }
 }
 
