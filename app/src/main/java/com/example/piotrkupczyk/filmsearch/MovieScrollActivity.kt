@@ -4,13 +4,17 @@ import adapters.MovieAdapter
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.helper.ItemTouchHelper
 import com.beust.klaxon.Klaxon
 import dataClasses.HomeFeed
+import itemTouchHelpers.SwipeToDeleteCallback
 import kotlinx.android.synthetic.main.activity_film_scroll.*
 import okhttp3.*
 import java.io.*
 
 class MovieScrollActivity : AppCompatActivity() {
+
+    lateinit var adapter: MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,9 +22,8 @@ class MovieScrollActivity : AppCompatActivity() {
 
         initRecyclerView()
         fetchJSON()
+//        initSwipeToDelete()
     }
-
-
 
     fun initRecyclerView() {
         recyclerView_main.layoutManager = LinearLayoutManager(this)
@@ -42,11 +45,21 @@ class MovieScrollActivity : AppCompatActivity() {
                 val result = Klaxon().parse<HomeFeed>(body!!)
 
                 runOnUiThread {
-                    recyclerView_main.adapter = MovieAdapter(result!!, this@MovieScrollActivity)
+                    adapter = MovieAdapter(result!!, this@MovieScrollActivity)
+                    recyclerView_main.adapter = adapter
+                    initSwipeToDelete()
                 }
             }
 
         })
     }
+
+    fun initSwipeToDelete() {
+        val callback = SwipeToDeleteCallback(adapter)
+        val helper = ItemTouchHelper(callback)
+        helper.attachToRecyclerView(recyclerView_main)
+    }
+
+
 }
 

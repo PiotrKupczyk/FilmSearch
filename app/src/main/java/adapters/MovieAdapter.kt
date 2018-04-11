@@ -42,6 +42,12 @@ class MovieAdapter(private val homeFeed: HomeFeed,private val context: Context) 
         }
     }
 
+    fun removeAt(position: Int) {
+        homeFeed.movies.removeAt(position)
+        notifyItemRemoved(position)
+
+    }
+
 }
 
 class CustomViewHolder(val view: View): RecyclerView.ViewHolder(view) {
