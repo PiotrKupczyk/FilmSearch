@@ -39,7 +39,7 @@ class ActorAdapter(private val dataSource: HomeFeed, private val moviePosition: 
     }
 
     fun getActors(): List<Actor> {
-        lateinit var actors: MutableList<Actor>
+        var actors: MutableList<Actor> = mutableListOf()
 
         for (actorId in actorsIds)
             actors.add(dataSource.actors[actorId])

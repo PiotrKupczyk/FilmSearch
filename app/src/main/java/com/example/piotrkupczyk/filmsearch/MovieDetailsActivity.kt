@@ -1,12 +1,17 @@
 package com.example.piotrkupczyk.filmsearch
 
+import adapters.ActorAdapter
+import adapters.SelectionsPagerAdapter
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import dataClasses.HomeFeed
 import kotlinx.android.synthetic.main.activity_movie_details.*
+import kotlinx.android.synthetic.main.actors.*
+import kotlinx.android.synthetic.main.move_description_fragment.*
 import kotlinx.android.synthetic.main.movie_row.*
 
 class MovieDetailsActivity : AppCompatActivity() {
@@ -20,6 +25,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         initIntent()
         initView()
+        initFragments()
     }
 
     fun initIntent() {
@@ -38,6 +44,12 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         detailsMovieName.text = movie.title
         detailsMovieCategories.text = movie.genres.toString()
+    }
+
+    fun initFragments() {
+        viewPager.adapter = SelectionsPagerAdapter(supportFragmentManager,
+                                                    homeFeed, selectedMovieIndex)
+        tabLayout.setupWithViewPager(viewPager)
     }
 
     companion object {
