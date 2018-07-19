@@ -1,7 +1,7 @@
 package consts
 
 object Consts {
-    val HOME_FEED = "homeFeed"
-    val SELECTED_MOVIE_INDEX = "movieSelectedIndex"
-    val DESCRIPTION = "description"
+    const val HOME_FEED = "homeFeed"
+    const val SELECTED_MOVIE_INDEX = "movieSelectedIndex"
+    const val DESCRIPTION = "description"
 }

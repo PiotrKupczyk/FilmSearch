@@ -1,18 +1,14 @@
 package com.example.piotrkupczyk.filmsearch
 
-import adapters.ActorAdapter
 import adapters.SelectionsPagerAdapter
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v4.content.ContextCompat
 import com.squareup.picasso.Picasso
 import dataClasses.HomeFeed
 import kotlinx.android.synthetic.main.activity_movie_details.*
-import kotlinx.android.synthetic.main.actors.*
-import kotlinx.android.synthetic.main.move_description_fragment.*
-import kotlinx.android.synthetic.main.movie_row.*
 
 class MovieDetailsActivity : AppCompatActivity() {
 
@@ -25,16 +21,42 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         initIntent()
         initView()
-        initFragments()
+        initViewPager()
     }
 
-    fun initIntent() {
+    private fun initIntent() {
         val bundle = intent.extras
         homeFeed = bundle.getSerializable(HOME_FEED) as HomeFeed
         selectedMovieIndex = bundle.getInt(SELECTED_MOVIE_INDEX)
     }
 
-    fun initView() {
+    private fun setBackground(movieCategory: String) {
+        when (movieCategory) {
+            "Drama" -> {
+                detailsLayout.setBackgroundColor(ContextCompat
+                        .getColor(this, R.color.dramaBackground))
+            }
+            "Crime" -> {
+                detailsLayout.setBackgroundColor(ContextCompat
+                        .getColor(this, R.color.crimeBackground))
+            }
+            "Action" -> {
+                detailsLayout.setBackgroundColor(ContextCompat
+                        .getColor(this, R.color.actionBackground))
+            }
+            "Adventure" -> {
+                detailsLayout.setBackgroundColor(ContextCompat
+                        .getColor(this, R.color.adventureBackground))
+            }
+            "Fantasy" -> {
+                detailsLayout.setBackgroundColor(ContextCompat
+                        .getColor(this, R.color.fantasyBackground))
+            }
+        }
+    }
+
+
+    private fun initView() {
         val movie = homeFeed.movies[selectedMovieIndex]
 
         //load image via Picasso
@@ -43,13 +65,17 @@ class MovieDetailsActivity : AppCompatActivity() {
                 .into(detailsMoviePoster)
 
         detailsMovieName.text = movie.title
-        detailsMovieCategories.text = movie.genres.toString()
+        detailsMovieCategories.text = movie.genresToString()
+        //default we take first genre. More advanced parsing will be implemented soon
+        setBackground(homeFeed.movies[selectedMovieIndex].genres[0])
     }
 
-    fun initFragments() {
-        viewPager.adapter = SelectionsPagerAdapter(supportFragmentManager,
-                                                    homeFeed, selectedMovieIndex)
-        tabLayout.setupWithViewPager(viewPager)
+    private fun initViewPager() {
+        val numberOfTabs = 3
+        detailsViewPager.adapter = SelectionsPagerAdapter(supportFragmentManager,
+                                                    homeFeed, selectedMovieIndex,
+                                                    numberOfTabs)
+        tabLayout.setupWithViewPager(detailsViewPager)
     }
 
     companion object {
@@ -59,7 +85,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             intent.putExtra(SELECTED_MOVIE_INDEX, selectedMovieIndex)
             context.startActivity(intent)
         }
-        private val HOME_FEED = "HOME_FEED"
-        private val SELECTED_MOVIE_INDEX = "SELECTED_MOVIE_INDEX"
+        private const val HOME_FEED = "HOME_FEED"
+        private const val SELECTED_MOVIE_INDEX = "SELECTED_MOVIE_INDEX"
     }
 }

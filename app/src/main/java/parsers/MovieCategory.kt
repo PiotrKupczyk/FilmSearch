@@ -5,5 +5,6 @@ enum class MovieCategory(val gener: String) {
     DRAMA(gener = "Drama"),
     ACTION(gener = "Action"),
     ADVENTURE(gener = "Adventure"),
-    FANTASY(gener = "Fantasy")
+    FANTASY(gener = "Fantasy"),
+    NONE(gener = "")
 }

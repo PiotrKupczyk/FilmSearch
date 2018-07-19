@@ -9,12 +9,11 @@ import consts.Consts
 import dataClasses.HomeFeed
 import fragments.ActorsRecyclerViewFragment
 import fragments.MovieDescriptionFragment
+import fragments.MovieImagesFragment
 
-class SelectionsPagerAdapter(fm: FragmentManager, homeFeed: HomeFeed,
-                             selectedMovieIndex: Int) : FragmentPagerAdapter(fm) {
+class SelectionsPagerAdapter(fm: FragmentManager, private val homeFeed: HomeFeed,
+                             private val selectedMovieIndex: Int, private val numberOfTabs: Int) : FragmentPagerAdapter(fm) {
 
-    val homeFeed = homeFeed
-    val selectedMovieIndex = selectedMovieIndex
     override fun getItem(position: Int): Fragment {
         val bundle = Bundle()
         when (position) {
@@ -31,11 +30,18 @@ class SelectionsPagerAdapter(fm: FragmentManager, homeFeed: HomeFeed,
                 movieDescriptionFragment.arguments = bundle
                 return movieDescriptionFragment
             }
+
+            2 -> {
+                val movieImagesFragment = MovieImagesFragment()
+                bundle.putInt(Consts.SELECTED_MOVIE_INDEX, selectedMovieIndex)
+                movieImagesFragment.arguments = bundle
+                return movieImagesFragment
+            }
         }
         return Fragment()
     }
 
     override fun getCount(): Int {
-        return 2
+        return numberOfTabs
     }
 }

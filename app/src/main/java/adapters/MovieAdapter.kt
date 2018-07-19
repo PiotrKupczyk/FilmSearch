@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.piotrkupczyk.filmsearch.MovieDetailsActivity
+import com.example.piotrkupczyk.filmsearch.MovieScrollActivity
 import com.example.piotrkupczyk.filmsearch.R
 import com.squareup.picasso.Picasso
 import dataClasses.HomeFeed
@@ -29,11 +31,12 @@ class MovieAdapter(private val homeFeed: HomeFeed,private val context: Context) 
 
     override fun onBindViewHolder(holder: CustomViewHolder?, position: Int) {
         if (holder != null) {
-            holder.view.movieTitle.text = homeFeed.movies.get(position).title
+            holder.view.movieTitle.text = homeFeed.movies[position].title
+            holder.view.movieCategory.text = homeFeed.movies[position].genresToString()
 
             //load movie from Picasso library
             val moviePoster = holder.view.movieImage
-            Picasso.with(holder.view.context).load(homeFeed.movies.get(position).posterUrl)
+            Picasso.with(holder.view.context).load(homeFeed.movies[position].posterUrl)
                     .into(moviePoster)
 
             holder.view.movieRow.setOnClickListener {

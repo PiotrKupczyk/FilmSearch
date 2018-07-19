@@ -25,12 +25,12 @@ class MovieScrollActivity : AppCompatActivity() {
 //        initSwipeToDelete()
     }
 
-    fun initRecyclerView() {
-        recyclerView_main.layoutManager = LinearLayoutManager(this)
+    private fun initRecyclerView() {
+        mainRecyclerView.layoutManager = LinearLayoutManager(this)
     }
 
-    fun fetchJSON() {
-        val jsonURL = "https://raw.githubusercontent.com/PiotrKupczyk/sorting/master/movies_and_actors"
+    private fun fetchJSON() {
+        val jsonURL = "https://raw.githubusercontent.com/PiotrKupczyk/FilmSearch/master/data_JSON"
 
         val request = Request.Builder().url(jsonURL).build()
 
@@ -46,7 +46,7 @@ class MovieScrollActivity : AppCompatActivity() {
 
                 runOnUiThread {
                     adapter = MovieAdapter(result!!, this@MovieScrollActivity)
-                    recyclerView_main.adapter = adapter
+                    mainRecyclerView.adapter = adapter
                     initSwipeToDelete()
                 }
             }
@@ -57,7 +57,7 @@ class MovieScrollActivity : AppCompatActivity() {
     fun initSwipeToDelete() {
         val callback = SwipeToDeleteCallback(adapter)
         val helper = ItemTouchHelper(callback)
-        helper.attachToRecyclerView(recyclerView_main)
+        helper.attachToRecyclerView(mainRecyclerView)
     }
 
 

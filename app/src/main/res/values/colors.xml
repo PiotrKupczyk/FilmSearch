@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#222228</color>
     <color name="colorAccent">#FF4081</color>
     <color name="lightGray">#fdf1f4</color>
+    <color name="dramaBackground">#68614e</color>
+    <color name="actionBackground">#80bf65</color>
+    <color name="fantasyBackground">#8e6ac1</color>
+    <color name="crimeBackground">#aaaaaa</color>
+    <color name="adventureBackground">#ffb148</color>
 </resources>
